@@ -8,6 +8,7 @@ import Drawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
 import ListItemText from "@mui/material/ListItemText";
 import Link from "next/link";
+import ShoppingCart from "@mui/icons-material/ShoppingCart";
 
 export default function DrawerMenu() {
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -39,7 +40,7 @@ export default function DrawerMenu() {
   return (
     <>
       <AppBar className="bg-black" position="static">
-        <Toolbar>
+        <Toolbar className="flex justify-between">
           <IconButton
             edge="start"
             color="inherit"
@@ -48,6 +49,9 @@ export default function DrawerMenu() {
           >
             <MenuIcon />
           </IconButton>
+          <Link href="/cart">
+            <ShoppingCart />
+          </Link>
         </Toolbar>
       </AppBar>
       <Drawer anchor="left" open={drawerOpen} onClose={toggleDrawer(false)}>
