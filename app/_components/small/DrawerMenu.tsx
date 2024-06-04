@@ -38,8 +38,8 @@ export default function DrawerMenu() {
   );
 
   return (
-    <>
-      <AppBar className="bg-black" position="static">
+    <div>
+      <AppBar className="bg-dark-black" position="static">
         <Toolbar className="flex justify-between">
           <IconButton
             edge="start"
@@ -57,6 +57,6 @@ export default function DrawerMenu() {
       <Drawer anchor="left" open={drawerOpen} onClose={toggleDrawer(false)}>
         {drawerContent}
       </Drawer>
-    </>
+    </div>
   );
 }
