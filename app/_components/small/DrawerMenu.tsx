@@ -8,7 +8,7 @@ import Drawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
 import ListItemText from "@mui/material/ListItemText";
 import Link from "next/link";
-import ShoppingCart from "@mui/icons-material/ShoppingCart";
+import Cart from "../common/Cart";
 
 export default function DrawerMenu() {
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -49,9 +49,7 @@ export default function DrawerMenu() {
           >
             <MenuIcon />
           </IconButton>
-          <Link href="/cart">
-            <ShoppingCart />
-          </Link>
+          <Cart />
         </Toolbar>
       </AppBar>
       <Drawer anchor="left" open={drawerOpen} onClose={toggleDrawer(false)}>

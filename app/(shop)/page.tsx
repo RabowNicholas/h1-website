@@ -1,4 +1,3 @@
-import { GetServerSideProps } from "next";
 import Head from "next/head";
 import ProductTile from "./_components/ProductTile";
 import { Product } from "./types";

@@ -1,9 +1,9 @@
 import Link from "next/link";
-import ShoppingCart from "@mui/icons-material/ShoppingCart";
+import Cart from "../common/Cart";
 
 export default function LargeNavbar() {
   return (
-    <div className="flex items-center justify-between bg-deep-black w-full h-16 text-cool-white px-4">
+    <div className="flex items-center justify-between bg-dark-black w-full h-[72px] text-cool-white px-4">
       <div className="flex-1"></div>
       <div className="flex gap-4 justify-center flex-3 uppercase text-xl">
         <Link href="/">shop</Link>
@@ -12,7 +12,7 @@ export default function LargeNavbar() {
       </div>
 
       <div className="flex-1 flex justify-end">
-        <ShoppingCart />
+        <Cart />
       </div>
     </div>
   );

@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { Product } from "../types";
 
 export default function ProductTile({ product }: { product: Product }) {
   return (

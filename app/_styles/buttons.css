@@ -5,6 +5,6 @@ BUTTON STYLES
 */
 @layer components {
   .button-primary-solid {
-    @apply bg-bright-yellow text-charcoal-gray border-2 border-bright-yellow hover:border-2 hover:border-bright-yellow hover:bg-light-gold transition-colors duration-300 lg:p-8 sm:px-8 sm:py-[13px] rounded-[10px];
+    @apply bg-bright-yellow text-charcoal-gray border-2 border-bright-yellow hover:text-graphite-gray hover:border-2 hover:border-bright-yellow hover:bg-light-gold transition-colors duration-300 lg:p-8 sm:px-8 sm:py-[13px] rounded-[10px];
   }
 }
