@@ -1,5 +1,6 @@
 "use client";
 
+import { createCheckout } from "@/lib/shopify/checkout/CreateCheckout";
 import { ShoppingCart } from "@mui/icons-material";
 import React, {
   createContext,
@@ -140,9 +141,27 @@ const Cart = () => {
     removeFromCart(itemId);
   };
 
-  // Handle checkout
-  const handleCheckout = () => {
-    // Add your checkout logic here
+  const handleCheckout = async () => {
+    try {
+      const response = await fetch("/api/checkout", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ cartItems: cart }), // Assuming 'cart' contains line items
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        window.location.href = data.checkout.web_url; // Redirect to checkout URL
+      } else {
+        console.error("Error:", response.statusText);
+        // Handle error
+      }
+    } catch (error: any) {
+      console.error("Error:", error.message);
+      // Handle error
+    }
   };
 
   return (

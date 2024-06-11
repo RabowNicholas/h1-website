@@ -16,20 +16,20 @@ interface CheckoutResponse {
 }
 
 export async function createCheckout(
-  lineItems: LineItem[]
+  lineItems: LineItem[],
+  storeDomain: string,
+  accessToken: string
 ): Promise<CheckoutResponse> {
+  const url = `${storeDomain}/checkouts.json`;
   try {
-    const response = await fetch(
-      `https://${storeDomain}/api/2023-01/checkouts.json`,
-      {
-        method: "POST",
-        headers: {
-          "X-Shopify-Storefront-Access-Token": storefrontAccessToken!,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ checkout: { line_items: lineItems } }),
-      }
-    );
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "X-Shopify-Storefront-Access-Token": accessToken!,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ checkout: { line_items: lineItems } }),
+    });
 
     if (!response.ok) {
       throw new Error("Network response was not ok.");
