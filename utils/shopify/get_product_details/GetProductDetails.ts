@@ -1,4 +1,4 @@
-import { storefront } from "../storefront";
+import { storefrontApi } from "../StorefrontApi";
 
 const gql = String.raw;
 
@@ -11,12 +11,12 @@ const productsQuery = gql`
       images(first: 4) {
         edges {
           node {
-            transformedSrc
+            url
             altText
           }
         }
       }
-      priceRangeV2 {
+      priceRange {
         minVariantPrice {
           amount
           currencyCode
@@ -27,7 +27,9 @@ const productsQuery = gql`
           node {
             id
             title
-            price
+            unitPrice {
+              amount
+            }
           }
         }
       }
@@ -39,21 +41,19 @@ export async function getProductDetails(
   handle: string
 ): Promise<ProductDetails | null> {
   try {
-    const { data } = await storefront(productsQuery, { handle });
-    const productData = data.productByHandle;
+    const response = await storefrontApi(productsQuery, { handle });
+    const productData = response.data.productByHandle;
     if (productData) {
       const firstVariant = productData.variants.edges[0]?.node;
-      const images = productData.images.edges.map(
-        (edge: any) => edge.node.transformedSrc
-      );
+      const images = productData.images.edges.map((edge: any) => edge.node.url);
 
       return {
         id: productData.id,
-        variantId: firstVariant?.id ?? "",
+        variantId: firstVariant?.id,
         title: productData.title,
         description: productData.description,
         media: images,
-        price: productData.priceRangeV2.minVariantPrice.amount,
+        price: productData.priceRange.minVariantPrice.amount,
       };
     } else {
       console.error(`Product not found for handle: ${handle}`);

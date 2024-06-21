@@ -1,65 +1,83 @@
 "use client";
 
-import { createCheckout } from "@/lib/shopify/checkout/CreateCheckout";
 import { ShoppingCart } from "@mui/icons-material";
 import React, {
   createContext,
   useContext,
   useState,
   ReactNode,
-  useEffect,
   useRef,
+  useEffect,
 } from "react";
-
-interface CartItem {
-  id: string;
-  variantId: string;
-  title: string;
-  price: number;
-  quantity: number;
-}
+import CreateCart from "../../../utils/shopify/cart/CreateCart";
+import AddItemToCart from "@/utils/shopify/cart/AddLineItemToCart";
+import { GetCart } from "@/utils/shopify/cart/GetCart";
+import RemoveItemFromCart from "@/utils/shopify/cart/RemoveLineItemFromCart";
+import UpdateItemQuantity from "@/utils/shopify/cart/UpdateItemQuantity";
+import RemoveItemsFromCart from "@/utils/shopify/cart/RemoveLineItemFromCart";
 
 interface CartContextType {
-  cart: CartItem[];
-  addToCart: (product: CartItem) => void;
+  cart: Cart | undefined;
+  addToCart: (product: AddCartLineItem) => void;
   removeFromCart: (productId: string) => void;
-  updateItemQuantity: (productId: string, newQuantity: number) => void;
+  updateItemQuantity: (line: UpdateCartLineItem) => void;
   clearCart: () => void;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export const CartProvider = ({ children }: { children: ReactNode }) => {
-  const [cart, setCart] = useState<CartItem[]>([]);
+  const [cart, setCart] = useState<Cart | undefined>(undefined);
+  const [loading, setLoading] = useState<boolean>(true);
 
-  const addToCart = (product: CartItem) => {
-    const existingProduct = cart.find((item) => item.id === product.id);
-    if (existingProduct) {
-      setCart(
-        cart.map((item) =>
-          item.id === product.id
-            ? { ...item, quantity: product.quantity + item.quantity }
-            : item
-        )
-      );
-    } else {
-      setCart([...cart, { ...product, quantity: product.quantity }]);
+  useEffect(() => {
+    const fetchData = async () => {
+      const cartId = await getCartId();
+      const cart = await GetCart(cartId);
+      setCart(cart);
+      setLoading(false);
+    };
+
+    fetchData();
+  }, []);
+
+  const getCartId = async () => {
+    let cartId = localStorage.getItem("cartId");
+
+    if (!cartId) {
+      const cartId = await CreateCart();
+      localStorage.setItem("cartId", cartId!);
     }
+    return cartId!;
   };
 
-  const removeFromCart = (productId: string) => {
-    setCart(cart.filter((item) => item.id !== productId));
+  const addToCart = async (product: AddCartLineItem) => {
+    const cartId = await getCartId();
+    const cart = await AddItemToCart(cartId, product);
+    setCart(cart);
   };
 
-  const updateItemQuantity = (productId: string, newQuantity: number) => {
-    setCart(
-      cart.map((item) =>
-        item.id === productId ? { ...item, quantity: newQuantity } : item
-      )
+  const removeFromCart = async (productId: string) => {
+    const cartId = await getCartId();
+    const cart = await RemoveItemsFromCart(cartId, [productId]);
+    setCart(cart);
+  };
+
+  const updateItemQuantity = async (line: UpdateCartLineItem) => {
+    const cartId = await getCartId();
+    const cart = await UpdateItemQuantity(cartId, line);
+    setCart(cart);
+  };
+
+  const clearCart = async () => {
+    const cartId = await getCartId();
+    const currentCart = await GetCart(cartId);
+    const cart = await RemoveItemsFromCart(
+      cartId,
+      currentCart.items.map((item) => item.lineId)
     );
+    setCart(cart);
   };
-
-  const clearCart = () => setCart([]);
 
   return (
     <CartContext.Provider
@@ -81,7 +99,6 @@ export const useCart = (): CartContextType => {
 const Cart = () => {
   const { cart, updateItemQuantity, removeFromCart } = useCart();
   const [showOverlay, setShowOverlay] = useState(false);
-  const [initialized, setInitialized] = useState(false);
   const overlayRef = useRef<HTMLDivElement>(null);
 
   // Toggle the overlay when the cart icon is clicked
@@ -110,30 +127,14 @@ const Cart = () => {
     };
   }, [showOverlay]);
 
-  // Open the cart when an item is added, but only after the component is initialized
-  useEffect(() => {
-    if (initialized && cart.length > 0) {
-      setShowOverlay(true);
-    }
-  }, [cart, initialized]);
-
-  // Initialize the cart after the initial render
-  useEffect(() => {
-    setInitialized(true);
-  }, []);
-
-  // Calculate the total number of items in the cart
-  const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-
   // Calculate the total price of items in the cart
-  const totalPrice = cart.reduce(
-    (sum, item) => sum + item.price * item.quantity,
-    0
-  );
+  const totalPrice =
+    cart?.items.reduce((sum, item) => sum + parseFloat(item.subtotalItem), 0) ||
+    0;
 
   // Handle quantity change
-  const handleQuantityChange = (itemId: string, newQuantity: number) => {
-    updateItemQuantity(itemId, newQuantity);
+  const handleQuantityChange = (lineId: string, newQuantity: number) => {
+    updateItemQuantity({ lineId: lineId, quantity: newQuantity });
   };
 
   // Handle item removal
@@ -148,7 +149,7 @@ const Cart = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ cartItems: cart }), // Assuming 'cart' contains line items
+        body: JSON.stringify({ CartLineItems: cart?.items }), // Assuming 'cart' contains line items
       });
 
       if (response.ok) {
@@ -164,34 +165,41 @@ const Cart = () => {
     }
   };
 
+  if (!cart) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div className="relative">
-      <ShoppingCart />
+      <ShoppingCart onClick={handleCartIconClick} />
 
-      {cart.length !== 0 && (
+      {cart.totalQuantity > 0 && (
         <div className="absolute top-2 right-2">
           <div
             className="bg-forest-green text-white rounded-full w-8 h-8 flex items-center justify-center text-lg font-bold cursor-pointer"
             onClick={handleCartIconClick}
           >
-            {totalItems}
+            {cart.totalQuantity}
           </div>
         </div>
       )}
 
       {/* Overlay that opens when the cart icon is clicked */}
       {showOverlay && (
-        <div className="absolute top-2 right-2 w-[300px] bg-forest-green flex items-center justify-center">
+        <div className="absolute top-2 right-2  bg-forest-green flex items-center justify-center">
           <div ref={overlayRef} className="p-6 rounded-lg shadow-lg">
             <h2 className="text-xl font-bold mb-4">Cart Items</h2>
             <ul>
-              {cart.map((item) => (
-                <li key={item.id} className="mb-2">
-                  {item.title} - Quantity:
+              {cart.items.map((item) => (
+                <li key={item.itemId} className="mb-2">
+                  {item.itemId} - Quantity:
                   <select
                     value={item.quantity}
                     onChange={(e) =>
-                      handleQuantityChange(item.id, parseInt(e.target.value))
+                      handleQuantityChange(
+                        item.lineId,
+                        parseInt(e.target.value)
+                      )
                     }
                     className="ml-2 border text-charcoal-gray rounded px-2 py-1"
                   >
@@ -202,7 +210,7 @@ const Cart = () => {
                     ))}
                   </select>
                   <button
-                    onClick={() => handleRemoveItem(item.id)}
+                    onClick={() => handleRemoveItem(item.lineId)}
                     className="border border-red-500 text-red-500 rounded px-2 py-1 ml-2"
                   >
                     Remove

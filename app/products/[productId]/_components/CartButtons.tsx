@@ -8,11 +8,8 @@ export default function CartButtons({ product }: { product: ProductDetails }) {
 
   const handleAddToCart = () => {
     addToCart({
-      id: product.id,
       variantId: product.variantId,
-      title: product.title,
       quantity: quantity,
-      price: product.price,
     });
     setQuantity(1);
   };

@@ -1,14 +1,14 @@
 import { Product } from "@/app/(shop)/types";
-import { storefront } from "../storefront";
+import { storefrontApi } from "../StorefrontApi";
 
 export async function getProducts(): Promise<Product[]> {
-  const { data } = await storefront<ProductsResponse>(productsQuery);
-  return data.products.edges.map((e: any) => ({
+  const response = await storefrontApi(productsQuery);
+  return response.data.products.edges.map((e: any) => ({
     id: e.node.handle,
     variantId: "",
-    imageUrl: e.node.images.edges[0].node.transformedSrc,
+    imageUrl: e.node.images.edges[0].node.url,
     title: e.node.title,
-    price: e.node.priceRangeV2.minVariantPrice.amount,
+    price: e.node.priceRange.minVariantPrice.amount,
   }));
 }
 
@@ -22,7 +22,7 @@ const productsQuery = gql`
           title
           handle
           tags
-          priceRangeV2 {
+          priceRange {
             minVariantPrice {
               amount
             }
@@ -30,7 +30,7 @@ const productsQuery = gql`
           images(first: 1) {
             edges {
               node {
-                transformedSrc
+                url
                 altText
               }
             }
