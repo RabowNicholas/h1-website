@@ -35,7 +35,7 @@ export default async function page({ params }: { params: { slug: string } }) {
   );
 }
 
-export async function getData(slug: string): Promise<PostData> {
+async function getData(slug: string): Promise<PostData> {
   const res = await client.getEntries({
     content_type: "post",
     "fields.slug": slug,

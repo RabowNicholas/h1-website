@@ -1,5 +1,5 @@
+import { getProductDetails } from "@/app/lib/shopify/get_product_details/GetProductDetails";
 import CartButtons from "./_components/CartButtons";
-import { getProductDetails } from "@/utils/shopify/get_product_details/GetProductDetails";
 import ImageGallery from "./_components/ImageGallery";
 
 export default async function Page({
