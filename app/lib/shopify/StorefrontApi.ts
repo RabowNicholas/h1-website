@@ -1,7 +1,6 @@
 export async function storefrontApi(query: string, variables = {}) {
-  const here = process.env.NEXT_PUBLIC_STOREFRONT_API_URL;
   try {
-    const response = await fetch(process.env.STOREFRONT_API_URL!, {
+    const response = await fetch(process.env.NEXT_PUBLIC_STOREFRONT_API_URL!, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
