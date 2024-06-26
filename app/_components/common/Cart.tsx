@@ -1,5 +1,10 @@
 "use client";
 
+import AddItemToCart from "@/app/lib/shopify/cart/AddLineItemToCart";
+import CreateCart from "@/app/lib/shopify/cart/CreateCart";
+import { GetCart } from "@/app/lib/shopify/cart/GetCart";
+import RemoveItemsFromCart from "@/app/lib/shopify/cart/RemoveLineItemFromCart";
+import UpdateItemQuantity from "@/app/lib/shopify/cart/UpdateItemQuantity";
 import { ShoppingCart } from "@mui/icons-material";
 import React, {
   createContext,
@@ -9,12 +14,6 @@ import React, {
   useRef,
   useEffect,
 } from "react";
-import CreateCart from "../../../utils/shopify/cart/CreateCart";
-import AddItemToCart from "@/utils/shopify/cart/AddLineItemToCart";
-import { GetCart } from "@/utils/shopify/cart/GetCart";
-import RemoveItemFromCart from "@/utils/shopify/cart/RemoveLineItemFromCart";
-import UpdateItemQuantity from "@/utils/shopify/cart/UpdateItemQuantity";
-import RemoveItemsFromCart from "@/utils/shopify/cart/RemoveLineItemFromCart";
 
 interface CartContextType {
   cart: Cart | undefined;

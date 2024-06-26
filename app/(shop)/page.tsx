@@ -1,7 +1,7 @@
 import Head from "next/head";
 import ProductTile from "./_components/ProductTile";
-import { getProducts } from "@/utils/shopify/get_products/GetProducts";
 import { Product } from "./types";
+import { getProducts } from "../lib/shopify/get_products/GetProducts";
 
 export default async function Page() {
   const products = await getProducts();

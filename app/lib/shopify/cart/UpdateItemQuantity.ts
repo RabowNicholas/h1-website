@@ -3,7 +3,7 @@ import { cartFields } from "./GetCart";
 
 const gql = String.raw;
 
-export default async function AddItemToCart(
+export default async function UpdateCartLineItem(
   cartId: string,
   item: UpdateCartLineItem
 ): Promise<Cart> {

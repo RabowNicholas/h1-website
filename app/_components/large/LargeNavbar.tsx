@@ -7,7 +7,7 @@ export default function LargeNavbar() {
       <div className="flex-1"></div>
       <div className="flex gap-4 justify-center flex-3 uppercase text-xl">
         <Link href="/">shop</Link>
-        <Link href="/">why hydrogen</Link>
+        <Link href="/educate">why hydrogen</Link>
         <Link href="/">where to buy</Link>
       </div>
 
