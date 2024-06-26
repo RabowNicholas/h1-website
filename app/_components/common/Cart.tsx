@@ -27,14 +27,12 @@ const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export const CartProvider = ({ children }: { children: ReactNode }) => {
   const [cart, setCart] = useState<Cart | undefined>(undefined);
-  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const fetchData = async () => {
       const cartId = await getCartId();
       const cart = await GetCart(cartId);
       setCart(cart);
-      setLoading(false);
     };
 
     fetchData();

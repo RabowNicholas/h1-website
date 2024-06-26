@@ -1,11 +1,12 @@
 export async function storefrontApi(query: string, variables = {}) {
+  const here = process.env.NEXT_PUBLIC_STOREFRONT_API_URL;
   try {
     const response = await fetch(process.env.STOREFRONT_API_URL!, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         "X-Shopify-Storefront-Access-Token":
-          process.env.STOREFRONT_ACCESS_TOKEN!,
+          process.env.NEXT_PUBLIC_STOREFRONT_ACCESS_TOKEN!,
       },
       body: JSON.stringify({ query, variables }),
     });
