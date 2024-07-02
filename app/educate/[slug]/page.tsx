@@ -15,7 +15,11 @@ export default async function page({ params }: { params: { slug: string } }) {
         <div>
           <h2 className="text-xl font-bold">{data.authorInfo.authorName}</h2>
           <p className="text-gray-600">
-            {new Date(data.createdAt).toLocaleDateString()}
+            {new Date(data.createdAt).toLocaleDateString("en-US", {
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            })}
           </p>
         </div>
       </div>

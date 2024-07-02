@@ -1,27 +1,52 @@
 import Head from "next/head";
-import ProductTile from "./_components/ProductTile";
-import { Product } from "./types";
 import { getProducts } from "../lib/shopify/get_products/GetProducts";
+import { getProductDetails } from "../lib/shopify/get_product_details/GetProductDetails";
+import ImageGallery from "./_components/ImageGallery";
 
 export default async function Page() {
-  const products = await getProducts();
+  const product = await getProductDetails("soap");
 
   return (
     <>
       <Head>
-        <title>Product List</title>
-        <meta name="description" content="Browse our selection of products." />
+        <title>{product ? product.title : "Our Product"}</title>
+        <meta name="description" content="Check out our featured product." />
       </Head>
-      {products !== undefined ? (
-        <div className="flex justify-center">
-          <div className="grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-8 mt-4">
-            {products.map((p: Product) => (
-              <ProductTile key={p.id} product={p} />
-            ))}
-          </div>
+
+      <header className="bg-dark-black text-warm-white py-16">
+        <div className="container mx-auto text-center">
+          <h1 className="text-4xl font-bold uppercase tracking-wider">
+            Welcome to H1 Hydration
+          </h1>
+          <p className="mt-4 text-lg uppercase">Live in abundance</p>
         </div>
+      </header>
+
+      {product ? (
+        <section className="bg-warm-white py-16">
+          <div className="container mx-auto px-4">
+            <div className="flex flex-col md:flex-row items-center">
+              <div className="md:w-1/2 p-4">
+                <ImageGallery images={product.media} />
+              </div>
+              <div className="md:w-1/2 p-4">
+                <h2 className="text-3xl font-bold mb-4">{product.title}</h2>
+                <p className="text-xl mb-4">{product.description}</p>
+                <p className="text-2xl font-bold mb-4">${product.price}</p>
+                <a
+                  href="#"
+                  className="inline-block bg-bright-yellow hover:bg-emerald-green text-warm-white font-bold py-2 px-4 rounded"
+                >
+                  Buy Now
+                </a>
+              </div>
+            </div>
+          </div>
+        </section>
       ) : (
-        <div>Loading...</div>
+        <div className="flex justify-center items-center h-screen">
+          <div className="text-xl font-semibold">Loading...</div>
+        </div>
       )}
     </>
   );
