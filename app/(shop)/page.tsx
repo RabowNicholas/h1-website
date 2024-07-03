@@ -2,6 +2,7 @@ import Head from "next/head";
 import { getProducts } from "../lib/shopify/get_products/GetProducts";
 import { getProductDetails } from "../lib/shopify/get_product_details/GetProductDetails";
 import ImageGallery from "./_components/ImageGallery";
+import CartButtons from "../products/[productId]/_components/CartButtons";
 
 export default async function Page() {
   const product = await getProductDetails("soap");
@@ -33,12 +34,7 @@ export default async function Page() {
                 <h2 className="text-3xl font-bold mb-4">{product.title}</h2>
                 <p className="text-xl mb-4">{product.description}</p>
                 <p className="text-2xl font-bold mb-4">${product.price}</p>
-                <a
-                  href="#"
-                  className="inline-block bg-bright-yellow hover:bg-emerald-green text-warm-white font-bold py-2 px-4 rounded"
-                >
-                  Buy Now
-                </a>
+                <CartButtons product={product} />
               </div>
             </div>
           </div>

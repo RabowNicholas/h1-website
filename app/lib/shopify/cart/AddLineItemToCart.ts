@@ -40,7 +40,9 @@ export default async function AddItemToCart(
         quantity: e.node.quantity,
         costPerItem: e.node.cost.amountPerQuantity,
         subtotalAmount: e.node.cost.subtotalAmount,
+        name: e.node.merchandise.product.title,
       };
     }),
+    subtotal: response.data.cartLinesAdd.cart.cost.subtotalAmount.amount,
   };
 }

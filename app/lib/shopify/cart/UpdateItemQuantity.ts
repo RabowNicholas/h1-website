@@ -44,7 +44,9 @@ export default async function UpdateCartLineItem(
         quantity: e.node.quantity,
         costPerItem: e.node.cost.amountPerQuantity,
         subtotalAmount: e.node.cost.subtotalAmount,
+        name: e.node.merchandise.product.title,
       };
     }),
+    subtotal: response.data.cartLinesUpdate.cart.cost.subtotalAmount.amount,
   };
 }

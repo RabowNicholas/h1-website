@@ -39,7 +39,9 @@ export default async function RemoveItemsFromCart(
         quantity: e.node.quantity,
         costPerItem: e.node.cost.amountPerQuantity,
         subtotalAmount: e.node.cost.subtotalAmount,
+        name: e.node.merchandise.product.title,
       };
     }),
+    subtotal: response.data.cartLinesRemove.cart.cost.subtotalAmount.amount,
   };
 }

@@ -13,6 +13,7 @@ interface Cart {
   totalQuantity: number;
   checkoutUrl: string;
   items: CartLine[];
+  subtotal: number;
 }
 
 interface CartLine {
@@ -21,4 +22,5 @@ interface CartLine {
   quantity: string;
   costPerItem: string;
   subtotalItem: string;
+  name: string;
 }

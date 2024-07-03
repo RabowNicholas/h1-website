@@ -13,36 +13,48 @@ export async function GetCart(cartId: string): Promise<Cart> {
         quantity: e.node.quantity,
         costPerItem: e.node.cost.amountPerQuantity,
         subtotalAmount: e.node.cost.subtotalAmount,
+        name: e.node.merchandise.product.title,
       };
     }),
+    subtotal: data.data.cart.cost.subtotalAmount.amount,
   };
 }
 
 const gql = String.raw;
 
 export const cartFields = `id
-totalQuantity
-checkoutUrl
-lines(first: 10) {
-  edges {
-    node {
-        id
-      merchandise {
-        ... on ProductVariant {
+    totalQuantity
+    checkoutUrl
+    lines(first: 10) {
+      edges {
+        node {
           id
+          merchandise {
+            ... on ProductVariant {
+              id
+              product {
+                title
+              }
+            }
+          }
+          cost {
+            amountPerQuantity {
+              amount
+            }
+            subtotalAmount {
+              amount
+            }
+          }
+          quantity
         }
       }
-      cost {
-        amountPerQuantity {
-          amount
-        }
-        subtotalAmount {
-          amount
-        }
-      }
-      quantity
     }
-  }}`;
+    cost {
+      subtotalAmount {
+        amount
+      }
+    }
+`;
 
 const cartQuery = gql`
   query GetCart($cartId: ID!) {
