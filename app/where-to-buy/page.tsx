@@ -9,8 +9,8 @@ export default function WhereToBuyComingSoon() {
       <div className="container mx-auto p-6 text-center">
         <h1 className="text-4xl font-bold mb-4">Where to Buy</h1>
         <p className="text-lg text-warm-white mb-8">
-          We're expanding! In the future, this page will show you where to find
-          our products in stores near you.
+          We&apos;re expanding! In the future, this page will show you where to
+          find our products in stores near you.
         </p>
         <Lottie animationData={animationData} style={{ height: 600 }} />
         <Link href="/">
