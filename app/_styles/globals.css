@@ -1,3 +1,21 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.hero-section {
+  position: relative;
+  transform: translateY(0);
+  transition: transform 0.1s ease-out;
+  will-change: transform;
+}
+
+/* Smooth scrolling behavior */
+html {
+  scroll-behavior: smooth;
+}
+
+@layer base {
+  .primary-button {
+    @apply bg-bright-yellow text-dark-black px-8 py-3 rounded-full text-lg font-semibold transition-transform hover:scale-105 duration-300 uppercase w-fit;
+  }
+}

@@ -1,22 +1,32 @@
 "use client";
+import { useEffect, useState } from "react";
 import Link from "next/link";
-import Lottie from "lottie-react";
+import dynamic from "next/dynamic";
 import animationData from "@/public/animations/coming_soon.json";
 
+// Dynamically import the Lottie component with SSR disabled
+const Lottie = dynamic(() => import("lottie-react"), { ssr: false });
+
 export default function WhereToBuyComingSoon() {
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
   return (
-    <div className="bg-dark-black text-cool-white flex flex-col justify-center items-center">
-      <div className="container mx-auto p-6 text-center">
+    <div className="bg-dark-black min-h-[94vh] text-cool-white">
+      <div className="container mx-auto p-6 text-center flex flex-col justify-center items-center">
         <h1 className="text-4xl font-bold mb-4">Where to Buy</h1>
         <p className="text-lg text-warm-white mb-8">
           We&apos;re expanding! In the future, this page will show you where to
           find our products in stores near you.
         </p>
-        <Lottie animationData={animationData} style={{ height: 600 }} />
+        {isClient && (
+          <Lottie animationData={animationData} style={{ height: 600 }} />
+        )}
         <Link href="/">
-          <div className="bg-bright-yellow hover:bg-yellow-600 text-dark-black font-bold py-3 px-6 rounded-lg mt-8 inline-block">
-            Back to Home
-          </div>
+          <div className="primary-button">Back to Home</div>
         </Link>
       </div>
     </div>

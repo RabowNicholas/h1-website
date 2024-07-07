@@ -23,11 +23,7 @@ export default async function page({ params }: { params: { slug: string } }) {
           </p>
         </div>
       </div>
-      <img
-        src={data.coverImage.src}
-        alt={data.coverImage.alt}
-        className="w-full h-auto mb-4"
-      />
+
       <h1 className="text-3xl font-bold mb-4">{data.title}</h1>
       <p className="text-gray-700 mb-6">{data.excerpt}</p>
       <div>

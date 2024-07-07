@@ -41,10 +41,7 @@ export default function CartButtons({ product }: { product: ProductDetails }) {
           +
         </button>
       </div>
-      <button
-        onClick={handleAddToCart}
-        className="bg-bright-yellow text-slate-gray px-4 py-2 rounded-lg uppercase hover:bg-bright-yellow transition-transform hover:scale-105 duration-300"
-      >
+      <button onClick={handleAddToCart} className="primary-button">
         Add to Cart
       </button>
     </div>

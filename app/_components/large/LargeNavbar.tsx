@@ -3,7 +3,7 @@ import Cart from "../common/Cart";
 
 export default function LargeNavbar() {
   return (
-    <div className="flex items-center justify-between bg-dark-black w-full h-[72px] text-warm-white px-4">
+    <div className="flex items-center justify-between bg-dark-black w-full h-[6vh] text-warm-white px-4">
       <div className="flex-1"></div>
       <div className="flex gap-10 justify-center flex-3 uppercase text-xl">
         <Link

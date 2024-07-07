@@ -111,7 +111,9 @@ const Cart = () => {
   const overlayRef = useRef<HTMLDivElement>(null);
 
   const handleCartIconClick = () => {
-    setShowOverlay(!showOverlay);
+    if (cart?.subtotal != 0) {
+      setShowOverlay(!showOverlay);
+    }
   };
 
   const handleClickOutside = (event: MouseEvent) => {
@@ -140,6 +142,9 @@ const Cart = () => {
 
   const handleRemoveItem = (itemId: string) => {
     removeFromCart(itemId);
+    if (cart?.items.length === 1) {
+      setShowOverlay(false);
+    }
   };
 
   if (!cart) {
