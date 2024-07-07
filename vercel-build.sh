@@ -20,6 +20,9 @@ if [ -n "$GITHUB_TOKEN" ]; then
   echo "https://${GITHUB_USERNAME}:${GITHUB_TOKEN}@github.com" > ~/.git-credentials
 fi
 
+# Set the LFS URL
+git config lfs.url "https://github.com/${GITHUB_USERNAME}/${REPOSITORY_NAME}.git/info/lfs"
+
 # Pull LFS files
 echo "Pulling LFS files"
 git lfs pull
