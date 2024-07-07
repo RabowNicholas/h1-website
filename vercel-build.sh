@@ -9,9 +9,19 @@ tar -xzf git-lfs.tar.gz
 cd git-lfs-3.2.0
 ./install.sh
 
-# Initialize and pull LFS files
+# Initialize Git LFS
 echo "Initializing Git LFS"
 git lfs install
+
+# Set up authentication for Git LFS
+if [ -n "$GITHUB_TOKEN" ]; then
+  echo "Setting up Git LFS authentication"
+  git config --global credential.helper store
+  echo "https://${GITHUB_USERNAME}:${GITHUB_TOKEN}@github.com" > ~/.git-credentials
+fi
+
+# Pull LFS files
+echo "Pulling LFS files"
 git lfs pull
 
 echo "Git LFS setup complete"
