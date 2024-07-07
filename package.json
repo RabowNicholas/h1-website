@@ -4,10 +4,9 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "sh ./vercel-build.sh && next build",
     "start": "next start",
-    "lint": "next lint",
-    "postinstall": "git lfs install && git lfs pull"
+    "lint": "next lint"
   },
   "dependencies": {
     "@emotion/react": "^11.11.4",
