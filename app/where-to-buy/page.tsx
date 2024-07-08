@@ -16,7 +16,7 @@ export default function WhereToBuyComingSoon() {
 
   return (
     <div className="bg-dark-black min-h-[94vh] text-cool-white">
-      <div className="container mx-auto p-6 text-center flex flex-col justify-center items-center">
+      <div className=" mx-auto p-6 text-center flex flex-col justify-center items-center">
         <h1 className="text-4xl font-bold mb-4">Where to Buy</h1>
         <p className="text-lg text-warm-white mb-8">
           We&apos;re expanding! In the future, this page will show you where to
@@ -26,7 +26,7 @@ export default function WhereToBuyComingSoon() {
           <Lottie animationData={animationData} style={{ height: 600 }} />
         )}
         <Link href="/">
-          <div className="primary-button">Back to Home</div>
+          <div className="primary-button">Back to shop</div>
         </Link>
       </div>
     </div>

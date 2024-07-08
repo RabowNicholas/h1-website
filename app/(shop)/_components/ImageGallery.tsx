@@ -17,7 +17,7 @@ export default function ImageGallery({ images }: { images: string[] }) {
   };
 
   return (
-    <div className="relative w-full h-96 mb-4 overflow-hidden rounded-lg shadow-lg">
+    <div className="relative h-96 mb-4 overflow-hidden rounded-lg shadow-lg">
       <div className="relative h-full">
         <Image
           src={images[currentImageIndex]}

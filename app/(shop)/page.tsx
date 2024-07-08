@@ -3,9 +3,15 @@ import Head from "next/head";
 import VideoGrid from "./_components/HeroVideos";
 import Product from "./_components/Product";
 
-const videos = [
+const videosLg = [
   "/videos/running.mp4",
   "/videos/biking.mp4",
+  "/videos/lifting.mp4",
+  "/videos/basketball.mp4",
+];
+
+const videosSm = [
+  "/videos/running.mp4",
   "/videos/lifting.mp4",
   "/videos/basketball.mp4",
 ];
@@ -27,10 +33,10 @@ export default function Page() {
 
       <header
         id="hero-section"
-        className="hero-section bg-dark-black text-warm-white relative overflow-hidden"
-        style={{ minHeight: "94vh" }}
+        className="hero-section bg-dark-black text-warm-white relative overflow-hidden lg:min-h-[94vh] sm:min-h-[78vh]"
       >
-        <VideoGrid videos={videos} />
+        <VideoGrid className="sm:block md:hidden lg:hidden" videos={videosSm} />
+        <VideoGrid className="sm:hidden md:block lg:block" videos={videosLg} />
         <div className="absolute inset-0 flex flex-col justify-center items-center text-center bg-black bg-opacity-50">
           <h1 className="text-4xl md:text-6xl font-bold mb-4">
             Live in Abundance
@@ -47,10 +53,8 @@ export default function Page() {
         </div>
       </header>
 
-      <section id="product-section" className="bg-warm-white py-16">
-        <div className="container mx-auto">
-          <Product />
-        </div>
+      <section id="product-section" className="bg-warm-white  lg:py-16">
+        <Product />
       </section>
     </>
   );
