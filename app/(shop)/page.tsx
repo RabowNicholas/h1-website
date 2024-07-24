@@ -2,19 +2,7 @@
 import Head from "next/head";
 import VideoGrid from "./_components/HeroVideos";
 import Products from "./_components/Products";
-
-const videosLg = [
-  "/videos/running.mp4",
-  "/videos/biking.mp4",
-  "/videos/lifting.mp4",
-  "/videos/basketball.mp4",
-];
-
-const videosSm = [
-  "/videos/running.mp4",
-  "/videos/lifting.mp4",
-  "/videos/basketball.mp4",
-];
+import { Suspense } from "react";
 
 export default function Page() {
   const smoothScrollToSection = (id: any) => {
@@ -35,8 +23,7 @@ export default function Page() {
         id="hero-section"
         className="hero-section bg-dark-black text-warm-white relative overflow-hidden lg:min-h-[94vh] sm:min-h-[78vh]"
       >
-        <VideoGrid className="sm:block md:hidden lg:hidden" videos={videosSm} />
-        <VideoGrid className="sm:hidden md:block lg:block" videos={videosLg} />
+        <VideoGrid />
         <div className="absolute inset-0 flex flex-col justify-center items-center text-center bg-black bg-opacity-50">
           <h1 className="text-4xl md:text-6xl font-bold mb-4">
             Live in Abundance

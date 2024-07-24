@@ -1,15 +1,15 @@
-import React, { CSSProperties } from "react";
+import { client } from "@/app/lib/contentful/client";
+import React from "react";
 
-interface VideoGridProps {
-  videos: string[];
-  style?: CSSProperties;
-  className?: string;
-}
+export default async function VideoGrid() {
+  const data = await client.getEntries({ content_type: "heroContent" });
+  const videos: string[] = data.items.map(
+    (i: any) => `https:${i.fields.content.fields.file.url}`
+  );
 
-const VideoGrid = ({ videos, style, className }: VideoGridProps) => {
   return (
-    <div className={className}>
-      <div className="grid grid-cols-1 md:grid-cols-2 w-full" style={style}>
+    <div>
+      <div className="grid grid-cols-1 md:grid-cols-2 w-full">
         {videos.map((video, index) => (
           <div key={index} className="w-full h-full">
             <video className="w-full h-full" autoPlay loop muted playsInline>
@@ -21,6 +21,4 @@ const VideoGrid = ({ videos, style, className }: VideoGridProps) => {
       </div>
     </div>
   );
-};
-
-export default VideoGrid;
+}
