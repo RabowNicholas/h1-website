@@ -3,6 +3,6 @@ export interface Product {
   id: string;
   variantId: string;
   title: string;
-  imageUrl: string;
+  imageUrls: string[];
   price: string;
 }

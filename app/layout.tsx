@@ -22,7 +22,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${sora.className} sm:mt-14 lg:mt-0 bg-warm-white`}>
+      <body className={`${sora.className}  bg-warm-white`}>
         <CartProvider>
           <Navbar />
           {children}

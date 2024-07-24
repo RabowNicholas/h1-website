@@ -1,10 +1,12 @@
 import { getProductDetails } from "@/app/lib/shopify/get_product_details/GetProductDetails";
-import ImageGallery from "./ImageGallery";
+import ImageGallery from "../../../(shop)/_components/ImageGallery";
 import CartButtons from "@/app/products/[productId]/_components/CartButtons";
 
-export default async function Product() {
-  const product = await getProductDetails("soap");
-
+export default async function Product({
+  product,
+}: {
+  product: ProductDetails | null;
+}) {
   return (
     <>
       {product ? (

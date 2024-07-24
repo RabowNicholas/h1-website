@@ -4,7 +4,7 @@ import PostPreviewTile from "./_components.tsx/PostPreviewTile";
 export default async function Page() {
   const data = await getData();
   return (
-    <div className=" mx-auto p-4 bg-warm-white">
+    <div className="my-14 mx-auto p-4 bg-warm-white">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {data.items.map((i: any) => {
           return (

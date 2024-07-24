@@ -1,7 +1,7 @@
 "use client";
 import Head from "next/head";
 import VideoGrid from "./_components/HeroVideos";
-import Product from "./_components/Product";
+import Products from "./_components/Products";
 
 const videosLg = [
   "/videos/running.mp4",
@@ -54,7 +54,7 @@ export default function Page() {
       </header>
 
       <section id="product-section" className="bg-warm-white  lg:py-16">
-        <Product />
+        <Products />
       </section>
     </>
   );

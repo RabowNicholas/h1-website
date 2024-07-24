@@ -6,7 +6,7 @@ export async function getProducts(): Promise<Product[]> {
   return response.data.products.edges.map((e: any) => ({
     id: e.node.handle,
     variantId: "",
-    imageUrl: e.node.images.edges[0].node.url,
+    imageUrls: e.node.images.edges.map((e: any) => e.node.url),
     title: e.node.title,
     price: e.node.priceRange.minVariantPrice.amount,
   }));
@@ -16,7 +16,7 @@ const gql = String.raw;
 
 const productsQuery = gql`
   query Products {
-    products(first: 2) {
+    products(first: 3) {
       edges {
         node {
           title
@@ -27,7 +27,7 @@ const productsQuery = gql`
               amount
             }
           }
-          images(first: 1) {
+          images(first: 3) {
             edges {
               node {
                 url
